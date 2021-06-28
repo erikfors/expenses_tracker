@@ -39,56 +39,65 @@ class _NewTransactionState extends State<NewTransaction> {
     if (title.isEmpty || amount <= 0 || _selectedDate == null) {
       return;
     }
-    widget.addTransaction(title, amount,_selectedDate);
+    widget.addTransaction(title, amount, _selectedDate);
 
     Navigator.of(context).pop();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 5,
-      child: Container(
-        padding: EdgeInsets.all(10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            TextField(
-              controller: titleController,
-              onSubmitted: (_) => triggerTransaction(),
-              decoration: InputDecoration(
-                labelText: "Title",
+    return SingleChildScrollView(
+      child: Card(
+        elevation: 5,
+        child: Container(
+          padding: EdgeInsets.only(
+            top: 10,
+            left: 10,
+            right: 10,
+            bottom: MediaQuery.of(context).viewInsets.bottom + 10,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              TextField(
+                controller: titleController,
+                onSubmitted: (_) => triggerTransaction(),
+                decoration: InputDecoration(
+                  labelText: "Title",
+                ),
               ),
-            ),
-            TextField(
-              controller: amountContoller,
-              keyboardType: TextInputType.number,
-              onSubmitted: (_) => triggerTransaction(),
-              decoration: InputDecoration(
-                labelText: "Amount",
+              TextField(
+                controller: amountContoller,
+                keyboardType: TextInputType.number,
+                onSubmitted: (_) => triggerTransaction(),
+                decoration: InputDecoration(
+                  labelText: "Amount",
+                ),
               ),
-            ),
-            Container(
-              height: 70,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(_selectedDate == null ? "No Date Selected" : "Date Selected: ${DateFormat.yMMMd().format(_selectedDate!)}"),
-                  TextButton(
-                    onPressed: _presentDatePicker,
-                    child: Text(
-                      "Select Date",
-                      style: TextStyle(fontWeight: FontWeight.bold),
+              Container(
+                height: 70,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(_selectedDate == null
+                        ? "No Date Selected"
+                        : "Date Selected: ${DateFormat.yMMMd().format(_selectedDate!)}"),
+                    TextButton(
+                      onPressed: _presentDatePicker,
+                      child: Text(
+                        "Select Date",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            ElevatedButton(
-              child: Text("Add Transaction"),
-              onPressed: triggerTransaction,
-            ),
-          ],
+              ElevatedButton(
+                child: Text("Add Transaction"),
+                onPressed: triggerTransaction,
+              ),
+            ],
+          ),
         ),
       ),
     );
